@@ -37,6 +37,7 @@ export default function Home() {
         }
         fetchData();
     }, [token]);
+
     return (<div className="wrapper">
         <div className={style.body}>
             <div style={{display: 'flex', alignItems: 'center',flexWrap: 'wrap'}}>
