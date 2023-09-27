@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import style from './page.module.css'
 import {EditorContent, useEditor} from "@tiptap/react";
 import {tiptapConfig} from "ui/tiptapEditor/tiptap.config";
+import Image from "next/image";
 
 export default function Blog({params}) {
     const [blogHtml, setBlogHtml] = useState({
@@ -47,7 +48,7 @@ export default function Blog({params}) {
                 <h3>{blogHtml.introduce}</h3>
                 {blogHtml.banner && (
                     <div>
-                        <img src={blogHtml.banner} className={style.banner} alt="宣传图"/>
+                        <Image width={500} height={500} src={blogHtml.banner} className={style.banner} alt="宣传图"/>
                     </div>
                 )}
                 <div className={style.blog}>
