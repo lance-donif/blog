@@ -4,14 +4,17 @@ import style from './page.module.css'
 import Link from "next/link";
 import {getTokenFromLocalStorage} from "/lib/getTokenFromLocalStorage";
 import Card from "/ui/Card";
+import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
 
 export default function Home() {
     const token = getTokenFromLocalStorage()
     const [homeData, setHomeData] = useState([]);
+    const urlC = process.env.NEXT_PUBLIC_urlC
+
     useMemo( () => {
         async function fetchData() {
             try {
-                const response = await fetch(`http://localhost:3000/api`);
+                const response = await fetch(`${urlC}/api`);
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
                 }
@@ -23,7 +26,7 @@ export default function Home() {
         }
 
         async function fetchLogin(token) {
-            const url = `http://localhost:3000/api/login/${token}`
+            const url = `${urlC}/api/login/${token}`
             console.log(url)
             try {
                 const response = await fetch(url);
