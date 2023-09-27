@@ -6,7 +6,7 @@ export async function GET(req,{params}) {
 
 
     const url = `${url1}/blog/${params.id}`;
-    const res = await fetch(url,{ next: { revalidate: 0 } } )
+    const res = await fetch(url,{ next: { revalidate: 0} } )
     const data = await res.json()
     return NextResponse.json(data)
 

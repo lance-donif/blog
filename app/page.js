@@ -8,13 +8,12 @@ import Card from "/ui/Card";
 export default function Home() {
     const token = getTokenFromLocalStorage()
     const [homeData, setHomeData] = useState([]);
-
-    useMemo( () => {
+    useMemo(() => {
         async function fetchData() {
             try {
                 const response = await fetch(`/api`);
                 const result = await response.json();
-                if (!response.ok) throw new Error("Network response was not ok");
+
                 setHomeData(result.data);
             } catch (error) {
                 console.error("There was a problem with the fetch operation:", error.message);
@@ -26,9 +25,7 @@ export default function Home() {
             console.log(url)
             try {
                 const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
+
                 const result = await response.json();
                 if (!result.data.token) localStorage.setItem('token', '');
             } catch (error) {
@@ -43,14 +40,18 @@ export default function Home() {
     }, [token]);
     return (<div className="wrapper">
         <div className={style.body}>
-            <h2 className={style.body_title}>最新消息</h2>
-            <div className={style.body_layout}>
+            <div style={{display: 'flex', alignItems: 'center',flexWrap: 'wrap'}}>
+                <h2 className={style.body_title}>最新消息</h2>
                 <div className={style.insert}>
                     <Link href={'/editor'}>
                         <div className={style.insertIcon}></div>
                     </Link>
                 </div>
-                {homeData?.map((item) => (<Card token={token} key={item.id} data={item}/>)) }
+            </div>
+            <div className={style.body_layout}>
+
+
+                {homeData?.map((item) => (<Card token={token} key={item.id} data={item}/>))}
             </div>
 
         </div>

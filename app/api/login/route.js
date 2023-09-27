@@ -6,7 +6,7 @@ export async function POST(req) {
     const res = await fetch(`${url}/login`, {
         method: "POST",
         headers: req.headers,
-        body: req.body, duplex: "half", next: {revalidate: 0}
+        body: req.body, duplex: "half", next: {revalidate: 100}
     })
     const result = await res.json()
     return NextResponse.json(result)

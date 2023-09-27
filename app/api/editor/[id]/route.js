@@ -8,9 +8,10 @@ export async function POST(req,{params}) {
     const res = await fetch(url, {
         method: 'POST',
         headers: req.headers,
-        body: req.body, duplex: "half",
+        body: req.body, duplex: "half"
     })
     const data = await res.json()
+
     return NextResponse.json(data)
 
 }

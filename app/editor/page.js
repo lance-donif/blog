@@ -33,7 +33,6 @@ export default function TiptapEditor() {
     const handleButtonClick = () => {
         document.getElementById("fileInput").click(); // 触发文件选择操作
     };
-    console.log(updateContent)
     return (
         <>
             <div className="wrapper">

@@ -15,12 +15,15 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 100px;
+
 }
 
 .card {
     margin-bottom: 40px;
     border-radius: 10px;
     position: relative;
+    width: 303px;
 
 }
 .updateEditor {
@@ -41,7 +44,7 @@
     width: 303px;
     height: 170px;
     border-radius: 10px 10px 0 0;
-
+    background-size: cover;
 }
 
 .card_text {
@@ -52,8 +55,8 @@
     padding: 24px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-content: center;
+    justify-content: space-evenly;
+    box-sizing: border-box;
 }
 
 .card_text div {
@@ -88,8 +91,9 @@
 }
 
 .insert {
-    width: 351px;
-    height: 358px;
+    margin-left: 5px;
+    width: 35px;
+    height: 35px;
     border: 2px solid black;
     border-radius: 10px;
     display: flex;
@@ -101,8 +105,8 @@
 .insertIcon {
     background-image: url("/add-line.svg");
     background-repeat: no-repeat;
-    height: 15dvw;
-    width: 15dvw;
+    height: 30px;
+    width: 30px;
 }
 /*.editorImage{}*/
 
