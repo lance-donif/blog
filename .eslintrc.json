@@ -1,8 +1,6 @@
 {
   "extends": [
     // eslint 自带拓展校验
-    "next/core-web-vitals",
-    // 官方推荐校验
-    "eslint:recommended"
+    "next/core-web-vitals"
   ]
 }
