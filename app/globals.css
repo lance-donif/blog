@@ -1,7 +1,38 @@
-*{
+body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    background-color: #f5f5f7;
+    vertical-align: middle;
+
     /*overflow: hidden;*/
+}
+
+.ProseMirror-selectednode .tiptapImage div img {
+    outline: 2px solid #68CEF8;;
+}
+
+.wrapper {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 10px;
+}
+@media (max-width: 768px) {
+
+    .wrapper {
+        max-width: 700px;
     }
+}
+
+a {
+    text-decoration: none;
+}
+
+@media (max-width: 500px) {
+
+    .tiptap img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+}
 

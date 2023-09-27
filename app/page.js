@@ -1,113 +1,101 @@
 'use client'
-import React, {useEffect, useRef, useState} from 'react';
-import {useEditor, EditorContent} from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
-import css from './page.module.css'
+import React, {useEffect, useState} from 'react';
+import style from './page.module.css'
 import Image from 'next/image'
-import TextAlign from '@tiptap/extension-text-align'
-import TiptapImage from "./tiptapImage";
+import Link from "next/link";
+import {getTokenFromLocalStorage} from "/lib/getTokenFromLocalStorage";
 
 export default function Home() {
-    const divRef = useRef(null);
-    const [imageSize,setImageSize] = useState({width:100,height:100})
+    const token = getTokenFromLocalStorage()
+    const [homeData, setHomeData] = useState([]);
     useEffect(() => {
-
-        if (divRef.current) {
-            const parentDiv = divRef.current.parentNode;
-            const parentWidth = parentDiv.offsetWidth;
-            const parentHeight = parentDiv.offsetHeight;
-            console.log("父元素的宽度：" + parentWidth);
-            console.log("父元素的高度：" + parentHeight);
-            // setImageSize({width:parentWidth,height:parentHeight})
+        async function fetchData() {
+            try {
+                const response = await fetch('http://localhost:3000/api');
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                const result = await response.json();
+                // console.log(result)
+                setHomeData(result.data);
+            } catch (error) {
+                console.error("There was a problem with the fetch operation:", error.message);
+            }
         }
-    }, [divRef]);
-    // 定义编辑器一些属性
-    const [tiptapEditor, setTiptapEditor] = useState();
-    // tiptap配置
-    const editor = useEditor({
-        editorProps: {
-            attributes: {
-                class: css.editor,
-            },
-        },
-        extensions: [
-            StarterKit, TextAlign.configure({
-                types: ['heading', 'paragraph'],
-            }), TiptapImage
-        ],
-        content: '<p>Hello World! 🌎️</p>' +
-            '<tiptap-image ref={divRef}  src="https://source.unsplash.com/8xznAGy4HcY/800x400"></tiptap-image>'
-    })
-    const svgMap = [
-        {
-            name: '居中',
-            src: '/editor/align-center.svg',
-            button: () => editor.chain().focus().setTextAlign('center').run(),
-        },
-        {
-            name: '居左',
-            src: '/editor/align-left.svg',
-            button: () => editor.chain().focus().setTextAlign('left').run(),
-        },
-        {
-            name: '居右',
-            src: '/editor/align-right.svg',
-            button: () => editor.chain().focus().setTextAlign('right').run(),
-        },
-        {
-            name: '加粗',
-            src: '/editor/bold.svg',
-            button: () => editor.chain().focus().toggleBold().run(),
-        },
-    ]
-    return (
-        <>
-            <div className={css.body}>
-                <div style={{
-                    width: '700px', height: '500px',
-                    backgroundColor: 'pink',
-                    borderRadius: '10px',
-                    display: 'flex',
-                    flexDirection: 'column'
-                }}>
-                    <div style={{
-                        borderRadius: '10px 10px 0 0', backgroundColor: '#fff',
-                    }}>
-                        <ul style={{
-                            display: 'flex',
-                            width: '100%',
-                            padding: '10px',
-                        }}>
-                            {svgMap.map((svg, index) => {
-                                return <li key={index}
-                                           onClick={svg.button}
-                                           style={{
-                                               display: 'flex',
-                                               flexDirection: 'row-reverse',
-                                               justifyContent: 'center',
-                                               alignItems: 'center',
-                                               border: '2px solid black',
-                                               marginRight: '6px'
-                                           }}>
-                                    <div
-                                        style={{
-                                            width: '20px',
-                                            height: "20px",
-                                            backgroundImage: `url('${svg.src}`,
-                                        }}
-                                        title={svg.name}
-                                    >
 
-                                    </div>
-                                </li>
-                            })}
-                        </ul>
-                    </div>
-                    <EditorContent
-                        editor={editor}/>
+        async function fetchLogin(token) {
+            const url = `http://localhost:3000/api/login/${token}`
+            console.log(url)
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                const result = await response.json();
+                if (!result.data.token) localStorage.setItem('token', '');
+                console.log(result.data.token)
+            } catch (error) {
+                console.error("There was a problem with the fetch operation:", error.message);
+            }
+        }
+
+        if (token) {
+            fetchLogin(token)
+        }
+        fetchData();
+    }, []);
+    return (<div className="wrapper">
+        <div className={style.body}>
+            <h2 className={style.body_title}>最新消息</h2>
+            <div className={style.body_layout}>
+                <div className={style.insert}>
+                    <Link href={'/editor'}>
+                        <div className={style.insertIcon}></div>
+                    </Link>
                 </div>
+                {homeData ? homeData.map((item) => (<Card token={token} key={item.id} data={item}/>)) : null}
             </div>
-        </>
-    )
-};
 
+        </div>
+    </div>);
+}
+
+function Card({data, token}) {
+    console.log(token)
+    return (<div className={style.card}>
+
+        {token ? <UpdateEditor id={data.id}/> : null}
+        <Link href={`/blog/${data.id}`}>
+            {data.banner ? <Image
+                alt={data.title}
+                src={data.banner}
+                width={0}
+                height={0}
+                sizes="100vw"
+                className={style.card_img}
+            /> : <div className={style.card_img}></div>}
+            <div className={style.card_text}>
+                <div>
+                    <div className={style.card_text_title}>{data.title}</div>
+                    <div className={style.card_text_introduce}>{data.introduce}</div>
+                </div>
+                <div className={style.card_text_createDate}>{data.createDate}</div>
+            </div>
+        </Link>
+    </div>);
+}
+
+function UpdateEditor({id}) {
+    return (<>
+        <div key={id} className={style.updateEditor}>
+
+            <Link href={`/editor/${id}`}>
+                <div
+                    className={style.updateEditorSvg}
+                    title={"编辑博客"}
+                >
+
+                </div>
+            </Link></div>
+    </>)
+}
