@@ -1,8 +1,9 @@
 import {NextResponse} from "next/server";
+import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
 
 export async function POST(req) {
-    // console.log(await  req.body)
-    const res = await fetch("http://127.0.0.1:8000/login", {
+    const url = process.env.NEXT_PUBLIC_url
+    const res = await fetch(`${url}/login`, {
         method: "POST",
         headers: req.headers,
         body: req.body, duplex: "half", next: {revalidate: 0}

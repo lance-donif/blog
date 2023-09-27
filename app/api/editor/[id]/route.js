@@ -1,8 +1,10 @@
 import {NextResponse} from 'next/server'
+import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
 
 export async function POST(req,{params}) {
+    const url1 = process.env.NEXT_PUBLIC_url
 
-    const url = `http://127.0.0.1:8000/update/${params.id}`;
+    const url = `${url1}/update/${params.id}`;
     const res = await fetch(url, {
         method: 'POST',
         headers: req.headers,

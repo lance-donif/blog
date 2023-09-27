@@ -4,6 +4,7 @@ import './globals.css'
 import 'react-photo-view/dist/react-photo-view.css';
 import css from '../lib/layout.module.css'
 import HeadNav from "/lib/HeadNav";
+import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
 // const inter = Inter({subsets: ['latin']})
 // export const metadata = {
 //   title: 'Create Next App',
