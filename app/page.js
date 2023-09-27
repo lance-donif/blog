@@ -22,7 +22,6 @@ export default function Home() {
 
         async function fetchLogin(token) {
             const url = `/api/login/${token}`
-            console.log(url)
             try {
                 const response = await fetch(url);
 
