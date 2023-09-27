@@ -17,7 +17,7 @@ export default function TiptapEditor({params}) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/blog/${params.id}`);
+                const response = await fetch(`/api/blog/${params.id}`);
                 const result = await response.json();
                 const content = result.data;
                 setUpdateContent(content.at(0))

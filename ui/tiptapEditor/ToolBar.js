@@ -22,7 +22,7 @@ export function ToolBar({defaultContent, updateId, editor}) {
     };
 
     async function SaveHtml() {
-        const url = updateId ? `http://localhost:3000/api/editor/${updateId}` : `http://localhost:3000/api/editor`;
+        const url = updateId ? `/api/editor/${updateId}` : `/api/editor`;
         const data = {
             ...defaultContent,
             editorHtml: editor.getHTML(),
