@@ -41,11 +41,11 @@ export default function Home() {
         <div className={style.body}>
             <div style={{display: 'flex', alignItems: 'center',flexWrap: 'wrap'}}>
                 <h2 className={style.body_title}>最新消息</h2>
-                <div className={style.insert}>
+                {token?  <div className={style.insert}>
                     <Link href={'/editor'}>
                         <div className={style.insertIcon}></div>
                     </Link>
-                </div>
+                </div>:null}
             </div>
             <div className={style.body_layout}>
 
