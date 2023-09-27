@@ -6,9 +6,13 @@ import {getTokenFromLocalStorage} from "/lib/getTokenFromLocalStorage";
 import Card from "/ui/Card";
 
 export default function Home() {
-    const token = getTokenFromLocalStorage()
+
     const [homeData, setHomeData] = useState([]);
+    let token;
     useMemo(() => {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+         token = getTokenFromLocalStorage()
+
         async function fetchData() {
             try {
                 const response = await fetch(`/api`);
@@ -37,24 +41,27 @@ export default function Home() {
         }
         fetchData();
     }, [token]);
+    return (
+        <div className="wrapper">
+            <div className={style.body}>
+                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                    <h2 className={style.body_title}>最新消息</h2>
 
-    return (<div className="wrapper">
-        <div className={style.body}>
-            <div style={{display: 'flex', alignItems: 'center',flexWrap: 'wrap'}}>
-                <h2 className={style.body_title}>最新消息</h2>
-                {token?  <div className={style.insert}>
-                    <Link href={'/editor'}>
-                        <div className={style.insertIcon}></div>
-                    </Link>
-                </div>:null}
+                    {token ? (<>
+                        <div className={style.insert}>
+                            <Link href={'/editor'}>
+                                <div className={style.insertIcon}></div>
+                            </Link>
+                        </div></>
+                    ) : <></>}
+                </div>
+                <div className={style.body_layout}>
+                    {homeData?.map((item,index) => (
+                        <Card token={token} key={item.id} data={item}/>
+                    ))}
+                </div>
             </div>
-            <div className={style.body_layout}>
-
-
-                {homeData?.map((item) => (<Card token={token} key={item.id} data={item}/>))}
-            </div>
-
         </div>
-    </div>);
-}
+    )
 
+}
