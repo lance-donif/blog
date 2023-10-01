@@ -47,7 +47,7 @@ export default function Home() {
                 <TokenInsert token={token}/>
             </div>
             <div className={style.body_layout}>
-                {homeData?.map((item, index) => (<Card token={token} key={item.id} data={item}/>))}
+                {homeData.map((item, index) => (<Card token={token} key={item.id} data={item}/>))}
             </div>
         </div>
     </div>)

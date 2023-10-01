@@ -35,3 +35,34 @@ a {
         height: 100%;
     }
 }
+
+.tiptap h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    line-height: 1.1;
+}
+
+.tiptap ul,
+ol {
+    padding: 0 1rem;
+}
+.tiptap > * + * {
+    margin-top: 0.75em;
+}
+.tiptap pre {
+    background: #0D0D0D;
+    color: #FFF;
+    font-family: 'JetBrainsMono', monospace;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+
+}
+.tiptap pre code {
+    color: inherit;
+    padding: 0;
+    background: none;
+    font-size: 0.8rem;
+}

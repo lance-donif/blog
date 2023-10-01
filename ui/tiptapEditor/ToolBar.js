@@ -80,18 +80,32 @@ export function ToolBar({defaultContent, updateId, editor}) {
     }
 
     const toolbarConfig = [{
+        name: '居左', src: '/editor/align-left.svg', button: () => editor.chain().focus().setTextAlign('left').run(),
+    }, {
         name: '居中',
         src: '/editor/align-center.svg',
         button: () => editor.chain().focus().setTextAlign('center').run(),
-    }, {
-        name: '居左', src: '/editor/align-left.svg', button: () => editor.chain().focus().setTextAlign('left').run(),
     }, {
         name: '居右', src: '/editor/align-right.svg', button: () => editor.chain().focus().setTextAlign('right').run(),
     }, {
         name: '加粗', src: '/editor/bold.svg', button: () => editor.chain().focus().toggleBold().run(),
     }, {
         name: '上传图片', src: '/editor/image-add-fill.svg', button: handleUpload,
-    },]
+    }, {
+        name: '代码块', src: '/editor/code-view.svg', button: () => editor.chain().focus().toggleCodeBlock().run(),
+    }, {
+        name: 'H1', src: '/editor/h-1.svg', button: () => editor.chain().focus().toggleHeading({level: 1}).run(),
+    }, {
+        name: 'H2', src: '/editor/h-2.svg', button: () => editor.chain().focus().toggleHeading({level: 2}).run(),
+    }, {
+        name: 'H3', src: '/editor/h-3.svg', button: () => editor.chain().focus().toggleHeading({level: 3}).run(),
+    }, {
+        name: '有序列表',
+        src: '/editor/list-ordered.svg',
+        button: () => editor.chain().focus().toggleOrderedList().run(),
+    }, {
+        name: '无序列表', src: '/editor/list-check.svg', button: () => editor.chain().focus().toggleBulletList().run(),
+    }]
     return <div>
         <input
             type="file"
@@ -100,7 +114,7 @@ export function ToolBar({defaultContent, updateId, editor}) {
             onChange={handleImageChange}
         />
         <ul style={{
-            display: 'flex', padding: '10px', border: '2px solid black', borderRadius: '10px',
+            display: 'flex', flexWrap: 'wrap', padding: '10px', border: '2px solid black', borderRadius: '10px',
         }}>
             {toolbarConfig.map((svg, index) => {
                 return <li key={index}

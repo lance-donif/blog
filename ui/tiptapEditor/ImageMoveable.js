@@ -24,7 +24,7 @@ export default function ImageMoveable({editor}) {
             editor.commands.tiptapImageReSize({
                 src: node.src,alt:node.alt,
                 width: target.style.width,
-                height: target.style.height
+                height: target.style.height,
             })
         }}
         scalable={true}
